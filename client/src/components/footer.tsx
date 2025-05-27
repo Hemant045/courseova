@@ -1,47 +1,82 @@
-
-import { Link } from "wouter";
-import { Facebook, Twitter, Instagram, Youtube, Mail } from "lucide-react";
+import { Link } from "react-router-dom";
+import { FaTelegramPlane, FaWhatsapp, FaEnvelope } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="bg-background border-t">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="font-bold text-lg mb-4">About Us</h3>
-            <p className="text-muted-foreground">
-              We are dedicated to providing high-quality education to help you succeed in your tech career journey.
+    <footer className="bg-background border-t text-muted-foreground text-sm w-full">
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
+          {/* Branding */}
+          <div className="md:col-span-2">
+            <h2 className="text-3xl font-bold text-primary mb-4 -ml-1">📘 Courseova</h2>
+            <p className="leading-relaxed mb-4">
+              The ultimate platform for students to learn, revise, and succeed in their tech journey with curated notes and expert-led courses.
             </p>
+            <p className="mb-1">📞 +91 9257372495</p>
+            <p>📧 courseova45@gmail.com</p>
           </div>
+
+          {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-lg mb-4">Quick Links</h3>
+            <h3 className="text-lg font-semibold text-primary mb-4">Explore</h3>
             <ul className="space-y-2">
-              <li><Link href="/courses">Courses</Link></li>
-              <li><Link href="/about">About</Link></li>
-              <li><Link href="/notes">Study Notes</Link></li>
+              <li><Link to="/courses" className="hover:text-primary transition">Courses</Link></li>
+              <li><Link to="/notes" className="hover:text-primary transition">Study Notes</Link></li>
+              <li><Link to="/about" className="hover:text-primary transition">About Us</Link></li>
+              <li><Link to="/contact" className="hover:text-primary transition">Contact</Link></li>
+              <li><Link to="/refund-policy" className="hover:text-primary transition">Refund & Return Policy</Link></li>
+              <li><Link to="/terms-and-conditions" className="hover:text-primary transition">Terms & Conditions</Link></li>
             </ul>
           </div>
-          <div>
-            <h3 className="font-bold text-lg mb-4">Contact</h3>
-            <ul className="space-y-2 text-muted-foreground">
-              <li>Email: contact@example.com</li>
-              <li>Phone: +91 1234567890</li>
-              <li>Location: Mumbai, India</li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-bold text-lg mb-4">Follow Us</h3>
-            <div className="flex space-x-4">
-              <a href="#" className="hover:text-primary"><Facebook className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-primary"><Twitter className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-primary"><Instagram className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-primary"><Youtube className="h-5 w-5" /></a>
-              <a href="#" className="hover:text-primary"><Mail className="h-5 w-5" /></a>
-            </div>
-          </div>
+
+          {/* Telegram Signup */}
+          {/* <div className="md:col-span-2">
+            <h3 className="text-lg font-semibold text-primary mb-4">Join Our Community</h3>
+            <p className="mb-4">Get course updates, study notes, and important alerts directly on Telegram.</p>
+            <a
+              href="https://t.me/courseova"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-primary text-white px-5 py-2 rounded-md hover:bg-primary/90 transition"
+            >
+              Join us on Telegram
+            </a>
+          </div> */}
         </div>
-        <div className="border-t mt-8 pt-8 text-center text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Your Learning Platform. All rights reserved.</p>
+
+        {/* Divider */}
+        <div className="mt-14 border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Bottom Text */}
+          <p className="text-center">&copy; {new Date().getFullYear()} <span className="font-semibold text-primary">Courseova</span>. Crafted with ❤️ in India.</p>
+
+          {/* Social Icons */}
+          <div className="flex gap-5">
+            <a
+              href="https://wa.me/919257372495"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="WhatsApp"
+              className="hover:text-green-500 transition"
+            >
+              <FaWhatsapp className="h-5 w-5" />
+            </a>
+            <a
+              href="https://t.me/CourseovaChannel"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Telegram"
+              className="hover:text-sky-500 transition"
+            >
+              <FaTelegramPlane className="h-5 w-5" />
+            </a>
+            <a
+              href="mailto:courseova45@gmail.com"
+              title="Email"
+              className="hover:text-red-500 transition"
+            >
+              <FaEnvelope className="h-5 w-5" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

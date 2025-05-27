@@ -1,8 +1,11 @@
+import "dotenv/config";
 import type { Express } from "express";
 import { createServer } from "http";
 import { storage } from "./storage";
 import { insertWaitlistSchema, insertOrderSchema } from "@shared/schema";
 import { ZodError } from "zod";
+import { sendWaitlistEmail } from "./emails/sendWaitlistEmail";
+import { sendPurchaseConfirmationEmail } from "./emails/sendPurchaseConfirmationEmail"; // ✅ new helper
 
 export async function registerRoutes(app: Express) {
   // Waitlist route
@@ -18,14 +21,15 @@ export async function registerRoutes(app: Express) {
       }
 
       const entry = await storage.createWaitlistEntry(data);
+      await sendWaitlistEmail(data.email); // ✅ sending waitlist email
+
       res.status(201).json(entry);
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json({ 
-          message: error.errors[0].message 
-        });
+        return res.status(400).json({ message: error.errors[0].message });
       }
-      throw error;
+      console.error("Waitlist error:", error);
+      res.status(500).json({ message: "Server error" });
     }
   });
 
@@ -36,18 +40,19 @@ export async function registerRoutes(app: Express) {
   });
 
   app.get("/api/courses/:id", async (req, res) => {
-    const course = await storage.getCourse(parseInt(req.params.id));
+    const courseId = Number(req.params.id);
+    const course = await storage.getCourse(courseId);
     if (!course) {
       return res.status(404).json({ message: "Course not found" });
     }
     res.json(course);
   });
 
-  // Payment routes
+  // Order route
   app.post("/api/orders", async (req, res) => {
     try {
       const data = insertOrderSchema.parse(req.body);
-      const course = await storage.getCourse(data.courseId);
+      const course = await storage.getCourse(Number(data.courseId));
 
       if (!course) {
         return res.status(404).json({ message: "Course not found" });
@@ -71,30 +76,41 @@ export async function registerRoutes(app: Express) {
       if (error instanceof ZodError) {
         return res.status(400).json({ message: error.errors[0].message });
       }
-      throw error;
+      console.error("Order creation error:", error);
+      res.status(500).json({ message: "Server error" });
     }
   });
 
   // Payment verification
   app.post("/api/orders/:id/verify", async (req, res) => {
-    const { upiTransactionId } = req.body;
-    const orderId = Number(req.params.id);
+    try {
+      const { upiTransactionId } = req.body;
+      const orderId = Number(req.params.id);
 
-    if (!upiTransactionId) {
-      return res.status(400).json({ message: "UPI transaction ID is required" });
+      if (!upiTransactionId) {
+        return res.status(400).json({ message: "UPI transaction ID is required" });
+      }
+
+      const order = await storage.getOrder(orderId);
+      if (!order) {
+        return res.status(404).json({ message: "Order not found" });
+      }
+
+      await storage.updateOrder(orderId, {
+        upiTransactionId,
+        status: "verification_pending"
+      });
+
+      const course = await storage.getCourse(order.courseId);
+      if (course) {
+        await sendPurchaseConfirmationEmail(order.email, course.title); // ✅ new email
+      }
+
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      res.status(500).json({ message: "Server error" });
     }
-
-    const order = await storage.getOrder(orderId);
-    if (!order) {
-      return res.status(404).json({ message: "Order not found" });
-    }
-
-    await storage.updateOrder(orderId, {
-      upiTransactionId,
-      status: "verification_pending"
-    });
-
-    res.json({ success: true });
   });
 
   return createServer(app);

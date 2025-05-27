@@ -27,6 +27,21 @@
   }
 }
 
+html, body {
+  overflow-x: hidden;
+} 
+
+html.dark {
+  background-color: #0f172a; /* for smooth dark effect */
+}
+
+/* tailwind.config.js में darkMode: 'class' हो */
+html.dark {
+  --tw-bg-opacity: 1;
+  background-color: rgba(17, 24, 39, var(--tw-bg-opacity)); /* bg-gray-900 */
+}
+
+
 /* Modern CSS animations and effects */
 .hover-lift {
   transition: transform 0.2s ease-in-out;

@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertWaitlistSchema, type InsertWaitlistEntry } from "@shared/schema";
+import {
+  insertWaitlistSchema,
+  type InsertWaitlistEntry,
+} from "@shared/schema";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -16,7 +19,7 @@ import {
 
 export default function WaitlistForm() {
   const { toast } = useToast();
-  
+
   const form = useForm<InsertWaitlistEntry>({
     resolver: zodResolver(insertWaitlistSchema),
     defaultValues: {
@@ -26,47 +29,61 @@ export default function WaitlistForm() {
 
   const mutation = useMutation({
     mutationFn: async (data: InsertWaitlistEntry) => {
+      // Save to waitlist
       await apiRequest("POST", "/api/waitlist", data);
+
+      // Send confirmation email
+      await fetch("/api/send-waitlist-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: data.email }),
+      });
     },
     onSuccess: () => {
       toast({
-        title: "Success!",
-        description: "You've been added to the waitlist. We'll be in touch soon!",
+        title: "🎉 Successfully Added!",
+        description:
+          "You've been added to the waitlist!",
       });
       form.reset();
     },
     onError: (error: Error) => {
       toast({
-        title: "Error",
-        description: error.message,
+        title: "Something went wrong",
+        description: error.message || "Please try again later.",
         variant: "destructive",
       });
     },
   });
 
   return (
-    <section id="waitlist-form" className="py-20">
-      <div className="max-w-md mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">Join the Waitlist</h2>
+    <section className="py-20 px-6 md:px-12 bg-gradient-to-br from-blue-50 to-purple-100">
+      <div className="max-w-xl mx-auto text-center">
+        <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
+          🚀 Be the First to Know
+        </h2>
         <p className="text-muted-foreground mb-8">
-          Be the first to know when we launch. Enter your email below.
+          Get notified when we launch new courses, offers, and materials. Sign up and stay ahead.
         </p>
-        
+
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit((data) => mutation.mutate(data))}
-            className="space-y-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full sm:w-[300px]">
                   <FormControl>
                     <Input
-                      placeholder="Enter your email"
                       type="email"
+                      placeholder="Enter your email"
                       {...field}
+                      className="rounded-full px-5 py-3"
                     />
                   </FormControl>
                   <FormMessage />
@@ -75,13 +92,17 @@ export default function WaitlistForm() {
             />
             <Button
               type="submit"
-              className="w-full"
               disabled={mutation.isPending}
+              className="rounded-full px-6 py-3 bg-purple-600 hover:bg-purple-700 transition-all"
             >
-              {mutation.isPending ? "Signing up..." : "Sign Up"}
+              {mutation.isPending ? "Joining..." : "Notify Me"}
             </Button>
           </form>
         </Form>
+
+        <p className="text-sm text-gray-500 mt-4">
+          🔒 No spam. Only valuable updates.
+        </p>
       </div>
     </section>
   );

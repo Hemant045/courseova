@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "courseapp-ca4ee",
+    "CourseovaApp": "courseapp-ca4ee",
+    "courseapp": "courseapp-ca4ee"
+  },
+  "targets": {},
+  "etags": {}
+}

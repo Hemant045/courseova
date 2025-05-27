@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ChevronRight, GraduationCap, Target, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -26,15 +27,15 @@ export default function HeroSection() {
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-in slide-in-from-bottom duration-500 delay-300">
-          <Button size="lg" className="group" onClick={() => {
-            document.querySelector("#course-list")?.scrollIntoView({ behavior: "smooth" });
-          }}>
-            Browse Courses
-            <ChevronRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+          <Button asChild size="lg" className="group">
+            <Link to="/courses">
+              Browse Courses
+              <ChevronRight className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Button>
 
-          <Button size="lg" variant="outline">
-            View Study Notes
+          <Button asChild size="lg" variant="outline">
+            <Link to="/notes">📚 View Study Notes</Link>
           </Button>
         </div>
 
