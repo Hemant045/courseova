@@ -199,7 +199,7 @@ function CourseFooter({ rating, price, link }: { rating: string; price: number; 
           ))}
           <span className="text-sm text-muted-foreground ml-1">({rating} reviews)</span>
         </div>
-        <p className="text-2xl font-bold">₹{price}</p>
+        <p className="text-2xl font-bold">₹{price}<span className="text-sm text-muted-foreground line-through ml-2">₹2999</span></p>
       </div>
 
       <Button className="h-10" asChild>

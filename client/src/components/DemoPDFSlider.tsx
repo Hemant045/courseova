@@ -43,14 +43,14 @@ export default function DemoPDFSlider({
     if (confirmUnlock) {
       // Decide route based on filename
       if (file.includes("DSA")) {
-        window.location.href = "/WebNotePayment2";
+        window.location.href = "https://payments.cashfree.com/forms?code=DSA-Notes";
       } else if (file.includes("SQL")) {
-        window.location.href = "/WebNotePayment3";
+        window.location.href = "https://payments.cashfree.com/forms/SQL-Notes";
       } else if (file.toLowerCase().includes("fullstack")) {
-        window.location.href = "/WebNotePayment";
+        window.location.href = "https://payments.cashfree.com/forms/MERN-Notes";
       } else {
         // Default fallback route
-        window.location.href = "/WebNotePayment";
+        window.location.href = "https://payments.cashfree.com/forms/MERN-Notes";
       }
     }
   };
@@ -150,7 +150,7 @@ export default function DemoPDFSlider({
             onClick={handleUnlockRedirect}
             className="px-5 py-2 bg-green-600 text-white rounded hover:bg-green-700"
           >
-            🔓 Unlock Full Notes (₹{displayPrice} UPI)
+            🔓 Unlock Full Notes (₹{displayPrice} UPI) 
           </button>
         </div>
       )}

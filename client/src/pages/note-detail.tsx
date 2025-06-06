@@ -24,7 +24,7 @@ const noteData: Record<string, {
     price: 29,
   },
   sql: {
-    title: "SQL Notes",
+    title: "Structured Query Language Notes",
     pdf: "/SQL-Handwritten-Notes.pdf",
     topics: [
       "Basic SELECT Queries",

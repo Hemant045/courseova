@@ -28,7 +28,7 @@ export default defineConfig({
   },
   root: path.resolve(__dirname, "client"),
   build: {
-    outDir: path.resolve(__dirname, "dist"),
+    outDir: path.resolve(__dirname, "dist"), // Change here!
     emptyOutDir: true,
   },
   server: {
@@ -37,7 +37,7 @@ export default defineConfig({
       allow: [path.resolve(__dirname)],
     },
     hmr: {
-      overlay: false, // ✅ Ye line overlay ko disable karegi
+      overlay: false,
     },
   },
   base: "/",

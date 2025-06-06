@@ -65,7 +65,7 @@ const sqlProduct = {
       </div>
     </div>
     <div className="p-4 flex justify-between items-center">
-      <Link to="/WebNotePayment" target="_blank">
+      <Link to="https://payments.cashfree.com/forms/MERN-Notes" target="_blank">
         <Button size="sm" className="text-sm font-semibold">Buy ₹{fullStackProduct.price}</Button>
       </Link>
       <div className="text-sm text-muted-foreground line-through -ml-20">₹499</div>
@@ -100,7 +100,7 @@ const sqlProduct = {
       </div>
     </div>
     <div className="p-4 flex justify-between items-center">
-      <Link to="/WebNotePayment2" target="_blank">
+      <Link to="https://payments.cashfree.com/forms?code=DSA-Notes" target="_blank">
         <Button size="sm" className="text-sm font-semibold">Buy ₹{dsaProduct.price}</Button>
       </Link>
       <div className="text-sm text-muted-foreground line-through -ml-20">₹449</div>
@@ -135,7 +135,7 @@ const sqlProduct = {
       </div>
     </div>
     <div className="p-4 flex justify-between items-center">
-      <Link to="/WebNotePayment3" target="_blank">
+      <Link to="https://payments.cashfree.com/forms/SQL-Notes" target="_blank">
         <Button size="sm" className="text-sm font-semibold">Buy ₹{sqlProduct.price}</Button>
       </Link>
       <div className="text-sm text-muted-foreground line-through -ml-20">₹399</div>

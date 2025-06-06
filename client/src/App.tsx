@@ -35,7 +35,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import RefundPolicy from './pages/RefundPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
-
+import PaymentSuccess from "./pages/PaymentSuccess";
+import Logout from "./pages/Logout";
 
 function PageWrapper() {
   const { isMenuOpen } = useMenuContext();
@@ -54,7 +55,7 @@ function PageWrapper() {
         <Route path="/courses/:courseId" element={<CourseDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/notes" element={<Notes />} />
-        <Route path="/notes/:noteId" element={<NoteDetail />} />
+        <Route path="/notes/demo-note/:topic" element={<NoteDetail />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/WebPayment" element={<WebPayment />} />
@@ -64,7 +65,14 @@ function PageWrapper() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<SignIn />} />
         <Route path="/cart" element={<CartPage />} />
-        <Route path="/premium-access" element={<PremiumAccess />} />
+        <Route
+         path="/premium-access"
+          element={
+            <ProtectedRoute>
+              <PremiumAccess />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/dashboard" element={
             <ProtectedRoute>
@@ -76,6 +84,8 @@ function PageWrapper() {
         <Route path="/refund-policy" element={<RefundPolicy />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/notes/demo-note/:topic" element={<NoteDetail />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/logout" element={<Logout />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

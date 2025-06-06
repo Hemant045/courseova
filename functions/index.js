@@ -1,29 +1,31 @@
 const functions = require("firebase-functions");
+const admin = require("firebase-admin");
+admin.initializeApp();
 
-exports.cashfreeWebhook = functions.https.onRequest((req, res) => {
-  if (req.method !== "POST") {
-    return res.status(405).send("Method Not Allowed");
-  }
-
+exports.paymentWebhook = functions.https.onRequest(async (req, res) => {
   const event = req.body;
 
-  console.log("Webhook event received:", event);
-
-  // TODO: Verify event here, like signature check (Cashfree docs)
-  // Then update your database or Firestore based on payment success/failure
-
-  if (event.txStatus === "SUCCESS") {
-    // payment successful - grant user access to course
-    console.log(
-        "Payment successful for orderId:", event.orderId,
-    );
-    // Add Firestore update code here
-  } else {
-    // payment failed or cancelled
-    console.log(
-        "Payment failed/cancelled for orderId:", event.orderId,
-    );
+  // Dummy validation (production me secure secret validate karo)
+  if (!event.order || !event.order.orderId) {
+    return res.status(400).send("Invalid payload");
   }
 
-  res.status(200).send("Webhook received");
+  const userEmail = event.order.customer_details.customer_email;
+  const orderId = event.order.orderId;
+
+  try {
+    // Save payment info to Firestore
+    const db = admin.firestore();
+    await db.collection("payments").doc(orderId).set({
+      email: userEmail,
+      orderId: orderId,
+      status: "PAID",
+      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    });
+
+    return res.status(200).send("Payment recorded");
+  } catch (error) {
+    console.error("Error saving payment:", error);
+    return res.status(500).send("Error");
+  }
 });

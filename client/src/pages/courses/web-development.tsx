@@ -35,7 +35,7 @@ export default function WebDevelopmentCoursePage() {
               💼 Start coding today and bring your web development dreams to life! 🚀💡
             </p>
             <Button size="lg" className="text-lg px-6 py-4 shadow-xl hover:scale-105 transition-transform">
-              <a href="/WebPayment" target="_blank" rel="noopener noreferrer">
+              <a href="https://payments.cashfree.com/forms/courseova-upi" target="_blank" rel="noopener noreferrer">
                 👉 Enroll Now At Just ₹199/- Only
               </a>
             </Button>
@@ -106,7 +106,7 @@ export default function WebDevelopmentCoursePage() {
             <a href="https://drive.google.com/file/d/1awvdnSMlgQaSi0cmrKIhlis67jwrfDA2/view?usp=sharing" download className="bg-primary text-white px-6 py-3 rounded-md font-semibold shadow-md hover:bg-primary/90 transition">
               📥 Download Roadmap PDF
             </a>
-            <a href="/WebPayment" target="_blank" rel="noopener noreferrer" className="bg-purple-700 text-white px-6 py-3 rounded-md font-semibold shadow-md hover:bg-purple-800 transition">
+            <a href="https://payments.cashfree.com/forms?code=courseova-upi" target="_blank" rel="noopener noreferrer" className="bg-purple-700 text-white px-6 py-3 rounded-md font-semibold shadow-md hover:bg-purple-800 transition">
               💳 Enroll Now At Just 199/- Only
             </a>
           </div>
@@ -149,7 +149,7 @@ export default function WebDevelopmentCoursePage() {
             Unlock Our Premium Coding Notes of MERN for Only ₹39! 💻 ✨
           </h3>
           <a
-            href="/WebNotePayment"
+            href="https://payments.cashfree.com/forms/MERN-Notes"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-purple-700 hover:bg-purple-800 text-white px-6 py-3 rounded-md font-semibold shadow-lg transition"

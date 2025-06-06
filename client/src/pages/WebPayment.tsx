@@ -43,22 +43,7 @@ const Payment = () => {
   return (
     <div className="min-h-screen flex justify-center items-center bg-[#f9f9f9] px-4 py-10">
       <div className="max-w-4xl w-full bg-white rounded-2xl shadow-md flex flex-col md:flex-row p-8 gap-10">
-          
-        {/* Left: Info */}
-        <div className="w-full md:w-1/2">
-          <h3 className="text-2xl font-bold">Full-Stack Web Development Course</h3>
-          <p className="mt-3 text-gray-600 text-base">
-            Master full-stack development from scratch with hands-on learning. Build real-world apps using HTML, CSS, JS, React, Node.js & MongoDB.
-          </p>
-          <ul className="mt-6 text-gray-700 text-base list-disc list-inside space-y-3">
-            <li><span className="font-semibold">50+ Hours</span> of HD Video Lectures</li>
-            <li><span className="font-semibold">15+ Real-World Projects</span> for Practical Experience</li>
-            <li><span className="font-semibold">Course Completion Certificate</span> to Showcase Skills</li>
-            <li><span className="font-semibold">Assignments & Notes</span> Included</li>
-          </ul>
-        </div>
-
-        {/* Right: Form */}
+        {/* Left: Form */}
         <div className="w-full md:w-1/2">
           <h2 className="text-2xl font-bold mb-6">Enroll Now</h2>
           <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
@@ -140,6 +125,20 @@ const Payment = () => {
               Pay ₹{paymentAmount} and Enroll in this Course
             </button>
           </form>
+        </div>
+
+        {/* Right: Info */}
+        <div className="w-full md:w-1/2">
+          <h3 className="text-2xl font-bold">Full-Stack Web Development Course</h3>
+          <p className="mt-3 text-gray-600 text-base">
+            Master full-stack development from scratch with hands-on learning. Build real-world apps using HTML, CSS, JS, React, Node.js & MongoDB.
+          </p>
+          <ul className="mt-6 text-gray-700 text-base list-disc list-inside space-y-3">
+            <li><span className="font-semibold">50+ Hours</span> of HD Video Lectures</li>
+            <li><span className="font-semibold">15+ Real-World Projects</span> for Practical Experience</li>
+            <li><span className="font-semibold">Course Completion Certificate</span> to Showcase Skills</li>
+            <li><span className="font-semibold">Assignments & Notes</span> Included</li>
+          </ul>
         </div>
 
         {/* Payment Modal */}

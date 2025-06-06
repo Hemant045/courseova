@@ -31,20 +31,20 @@ const premiumContent = [
         title: 'Installation',
         video: 'https://drive.google.com/file/d/11J9d2LJqrcsbfCBTPP0M16t3DkdA8SBO/preview',
       },
-       {
+      {
         title: 'HTML Basics',
         video: 'https://drive.google.com/file/d/11Q1aXa6DoTqkj5fAsK9XHXbIx_gmxR1P/preview',
       },
       {
-        title: 'Tags and attribute',
+        title: 'Tags and Attribute',
         video: 'https://drive.google.com/file/d/11vhQKW_E3ZCLLeZmBVrFaQ2zJ52t7bvM/preview',
       },
-       {
-        title: 'Image tag & list',
+      {
+        title: 'Image Tag & List',
         video: 'https://drive.google.com/file/d/11x18mJTKp3U30eUXMD8JG74f5Uf-9Wdw/preview',
       },
       {
-        title: 'Table and Video tags',
+        title: 'Table and Video Tags',
         video: 'https://drive.google.com/file/d/1219RX4EkIWoA42zOOE0tt7p5Uua6BEbk/preview',
       },
       {
@@ -65,14 +65,16 @@ const premiumContent = [
       {
         title: 'CSS Color Property',
         video: 'https://drive.google.com/file/d/18dI9X_kgi0yT9nfaFPDfl5fN882hFk1c/preview',
-      }, {
+      },
+      {
         title: 'CSS Border',
         video: 'https://drive.google.com/file/d/1MwxqMaFhGtKS9jAEEEsVx6ft53eow0bk/preview',
       },
       {
         title: 'Position Properties',
         video: '/videos/CSSL4.mp4',
-      }, {
+      },
+      {
         title: 'Text Properties',
         video: '/videos/CSSL5.mp4',
       },
@@ -80,10 +82,7 @@ const premiumContent = [
         title: 'CSS Gradients',
         video: 'https://drive.google.com/file/d/12A0EJOAgV2MHVryLlo9W8dM79EW24365/preview',
         assignment: ['Q1. Build a basic webpage'],
-        project: ['HTML Portfolio Page'],
-      }, {
-        title: 'Advanced CSS',
-        video: 'https://drive.google.com/file/d/10MqcTMCOZjvxWP6O_lTzkanz_4jK-3VI/view?usp=drive_link',
+        project: ['CSS Portfolio Page'],
       },
       {
         title: 'Advanced CSS',
@@ -95,7 +94,18 @@ const premiumContent = [
 
 const PremiumAccess = () => {
   const [activeModule, setActiveModule] = useState<number | null>(null);
-  const [activeTopic, setActiveTopic] = useState<number | null>(null);
+  const [activeTopic, setActiveTopic] = useState<{ [key: number]: number | null }>({});
+
+  const toggleModule = (index: number) => {
+    setActiveModule(prev => (prev === index ? null : index));
+  };
+
+  const toggleTopic = (moduleIndex: number, topicIndex: number) => {
+    setActiveTopic(prev => ({
+      ...prev,
+      [moduleIndex]: prev[moduleIndex] === topicIndex ? null : topicIndex,
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 to-blue-100 py-10 px-4">
@@ -105,13 +115,11 @@ const PremiumAccess = () => {
         </h1>
 
         {premiumContent.map((module, moduleIndex) => (
-          <div key={moduleIndex} className="mb-6 transition-all duration-300">
+          <div key={moduleIndex} className="mb-6">
             <div className="bg-white shadow-lg rounded-xl overflow-hidden border border-gray-200">
               <button
-                onClick={() =>
-                  setActiveModule(activeModule === moduleIndex ? null : moduleIndex)
-                }
-                className="w-full px-6 py-4 flex justify-between items-center text-lg font-semibold text-blue-800 bg-blue-50 hover:bg-blue-100 transition-all duration-200"
+                onClick={() => toggleModule(moduleIndex)}
+                className="w-full px-6 py-4 flex justify-between items-center text-lg font-semibold text-blue-800 bg-blue-50 hover:bg-blue-100"
               >
                 <span>{module.title}</span>
                 <FaChevronDown
@@ -126,22 +134,21 @@ const PremiumAccess = () => {
                   {module.topics.map((topic, topicIndex) => (
                     <div key={topicIndex}>
                       <button
-                        onClick={() =>
-                          setActiveTopic(activeTopic === topicIndex ? null : topicIndex)
-                        }
+                        onClick={() => toggleTopic(moduleIndex, topicIndex)}
                         className="w-full px-6 py-3 flex justify-between items-center text-md text-blue-700 bg-blue-50 hover:bg-blue-100"
                       >
                         <span>{topic.title}</span>
                         <FaChevronDown
                           className={`transform transition-transform duration-300 ${
-                            activeTopic === topicIndex ? 'rotate-180' : ''
+                            activeTopic[moduleIndex] === topicIndex ? 'rotate-180' : ''
                           }`}
                         />
                       </button>
-                      {activeTopic === topicIndex && (
+
+                      {activeTopic[moduleIndex] === topicIndex && (
                         <div className="px-6 pb-6 pt-2 bg-white space-y-6">
-                          {topic.video.includes('drive.google.com/file/d/') ? (
-                            <div className="w-full aspect-[16/9] md:h-[400px] md:aspect-auto rounded-lg overflow-hidden border">
+                          {topic.video.includes('drive.google.com') ? (
+                            <div className="w-full aspect-[16/9] md:h-[400px] rounded-lg overflow-hidden border">
                               <iframe
                                 src={topic.video.replace('/view?usp=sharing', '/preview')}
                                 title={topic.title}
@@ -151,13 +158,14 @@ const PremiumAccess = () => {
                               />
                             </div>
                           ) : (
-                            <div className="w-full aspect-[16/9] md:h-[400px] md:aspect-auto rounded-lg overflow-hidden border">
+                            <div className="w-full aspect-[16/9] md:h-[400px] rounded-lg overflow-hidden border">
                               <video controls className="w-full h-full">
                                 <source src={topic.video} type="video/mp4" />
                                 Your browser does not support the video tag.
                               </video>
                             </div>
                           )}
+
                           {topic.assignment && (
                             <div>
                               <h4 className="font-semibold text-green-700">📄 Assignment</h4>
@@ -168,6 +176,7 @@ const PremiumAccess = () => {
                               </ul>
                             </div>
                           )}
+
                           {topic.project && (
                             <div>
                               <h4 className="font-semibold text-yellow-700">🛠 Project</h4>
@@ -188,7 +197,7 @@ const PremiumAccess = () => {
           </div>
         ))}
 
-        {/* PDF Notes */}
+        {/* PDF Notes Section */}
         <div className="mt-16">
           <h2 className="text-3xl font-bold text-center text-purple-800 mb-4">
             Related Notes (Handwritten Notes)
