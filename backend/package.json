@@ -1,0 +1,13 @@
+{
+  "name": "courseova-backend",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "firebase-admin": "^11.8.1",
+    "body-parser": "^2.2.0",
+    "dotenv": "^16.5.0"
+  }
+}
